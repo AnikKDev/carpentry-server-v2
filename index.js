@@ -14,8 +14,9 @@ const port = process.env.PORT || 5000;
 const stripe = require("stripe")('sk_test_51L0hCqAAAfEXZZSuMMXaKqpsynUICB7uBVnfNBZYUKnEAblVKattXrTm2eRMzKoZfWpLui2zzR0hb92E5DyQtbjN00XDLPFwby');
 app.use(express.json());
 app.use(cors());
-
-
+// static middleware
+app.use(express.static('public'))
+app.set('view engine', 'ejs')
 // middleware before route
 
 // this is an application level middleware which will be being called each  time whenever I hit any api endpoint
@@ -286,7 +287,15 @@ run().catch(console.dir);
 
 // APIs
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    // res.send('Hello World!')
+    // send static data to client
+    // res.sendFile(__dirname + '/public/home.html')
+    res.render('test.ejs', {
+        id: 2,
+        user: {
+            name: "Anik"
+        }
+    })
 })
 
 app.all('*', (req, res) => {
